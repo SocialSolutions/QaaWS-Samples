@@ -66,7 +66,9 @@ namespace SiteList
 			QueryAsAServiceSoapClient client = new ETOResults.QaaWS.Samples.Sites.QueryAsAServiceSoapClient();
 
 			// Execute the query
-			Row[] rows = client.runQueryAsAService(header, query, out msg, out creatorname, out createdate, out creationdateformatted, out description, out universe, out queryruntime, out fetchedrows);
+			Row[] rows = client.runQueryAsAService(header, query
+				, out msg, out creatorname, out createdate, out creationdateformatted
+				, out description, out universe, out queryruntime, out fetchedrows);
 
 			Console.WriteLine(@"Retrieved {0} rows in {1} seconds.", fetchedrows, queryruntime);
 			
