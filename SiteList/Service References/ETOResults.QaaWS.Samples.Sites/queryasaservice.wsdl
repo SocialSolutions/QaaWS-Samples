@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s0="Sites" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tns1="dsws.businessobjects.com" name="queryasaservice" targetNamespace="Sites" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <s:schema elementFormDefault="qualified" targetNamespace="Sites">
+      <s:element name="runQueryAsAService">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="login" type="s:string" />
+            <s:element name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Row">
+        <s:sequence>
+          <s:element name="Site_Name" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Table">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" name="row" type="s0:Row" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="runQueryAsAServiceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="table" type="s0:Table" />
+            <s:element name="message" type="s:string" />
+            <s:element name="creatorname" type="s:string" />
+            <s:element name="creationdate" type="s:dateTime" />
+            <s:element name="creationdateformated" type="s:string" />
+            <s:element name="description" type="s:string" />
+            <s:element name="universe" type="s:string" />
+            <s:element name="queryruntime" type="s:int" />
+            <s:element name="fetchedrows" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QaaWSHeader">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sessionID" nillable="true" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="serializedSession" nillable="true" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </types>
+  <message name="runQueryAsAServiceSoapIn">
+    <part name="parameters" element="s0:runQueryAsAService" />
+    <part name="request_header" element="s0:QaaWSHeader" />
+  </message>
+  <message name="runQueryAsAServiceSoapOut">
+    <part name="parameters" element="s0:runQueryAsAServiceResponse" />
+  </message>
+  <portType name="QueryAsAServiceSoap">
+    <operation name="runQueryAsAService">
+      <documentation>Get Web Service Provider server info</documentation>
+      <input message="s0:runQueryAsAServiceSoapIn" />
+      <output message="s0:runQueryAsAServiceSoapOut" />
+    </operation>
+  </portType>
+  <binding name="QueryAsAServiceSoap" type="s0:QueryAsAServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="runQueryAsAService">
+      <soap:operation soapAction="Sites/runQueryAsAService" style="document" />
+      <input>
+        <soap:header message="s0:runQueryAsAServiceSoapIn" part="request_header" use="literal">
+          <soap:headerfault message="s0:runQueryAsAServiceSoapIn" part="request_header" use="literal" />
+        </soap:header>
+        <soap:body use="literal" parts="parameters" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="Sites">
+    <documentation>This web service returns a list of Sites in the ETO Enterprise.</documentation>
+    <port name="QueryAsAServiceSoap" binding="s0:QueryAsAServiceSoap">
+      <soap:address location="https://liveoffice.etosoftware.com/dswsbobje/qaawsservices/queryasaservice?&amp;cuid=Afg7hriNfChBslO9TDgBqLc&amp;authType=secEnterprise&amp;locale=en_US&amp;timeout=60&amp;ConvertAnyType=false" />
+    </port>
+  </service>
+</definitions>
